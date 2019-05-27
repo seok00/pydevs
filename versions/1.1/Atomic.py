@@ -16,7 +16,6 @@ class Atomic(Model):
         super().__init__(name, processor, parent)
         self.phaseList = phaseList
         self.phase = None
-        self.sigma = 0.0
     
     @property
     def phase(self):
@@ -28,15 +27,6 @@ class Atomic(Model):
             raise (ValueError("Wrong phase value. Phase must be in phase list"))
         else:
             self.phase = value
-
-    @property
-    def sigma(self):
-        return self.sigma
-    
-    @sigma.setter
-    def sigma(self, value):
-        assert type(value) is float
-        self.sigma = value
     
     def output(self):
         # Output based on state
@@ -49,6 +39,11 @@ class Atomic(Model):
         raise(NotImplementedError("You must specify external transition function before simulation"))
 
     def timeAdvance(self):
+        """
+        time advance function of DEVS formalism
+        changes the sigma varible
+        according to its current state
+        """
         raise(NotImplementedError("You must specify time advance function before simulation"))
 
     def reset(self):

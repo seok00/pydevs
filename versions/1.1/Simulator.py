@@ -3,7 +3,6 @@ from Message import Message
 from Atomic import Atomic
 from Port import Port
 from Processor import Processor
-from constants import MsgType
 
 class Simulator(Processor):
 
@@ -30,16 +29,20 @@ class Simulator(Processor):
             [type] -- [description]
         """
         assert issubclass(message, Message)
-        if type(message) is MsgType.X:
-            # arrival of external event, global time
-            # 1. Update time variables
-            # 2. execute external transition function
-            # 3. repond with a done message
-            self.lastEventTime = self.nextEventTime
-            self.nextEventTime = self.model.timeAdvance()
+        
+        if type(message) is Message.X:
+            """
+            Arrival of external event
+            1. Time advance and set new sigma variable. This means set next internal transition time
+            2. External transition
+            
+            Returns:
+                [Message.Done] -- [Telling that it has finished its external input transition and its next event time]
+            """
+            self.model.timeAdvance()
             self.model.externalTransition(message)
-            return Message.Done(self.model, self.nextEventTime)
-        elif type(message) is MsgType.Star:
+            return Message.Done(Port(self.model, ))
+        elif type(message) is Message.Star:
             # Time to execute internal transition
             # 1. Get output of current phase's internal transition
             # 2. Comput internal transition function

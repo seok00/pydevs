@@ -1,52 +1,58 @@
 from Port import Port
 from Model import Model
+from Processor import Processor
 
-class Message:
-
-    def __init__(self, msgType, srcPort, dstPort, time, value=None):
-        """[__init__]
-        Arguments:
-            msgType {[MsgType]} -- [Represents type of the message in DEVS formalism]
-            srcPort {[Port]} -- [Source port of the message]
-            dstPort {[Port]} -- [Destination port of the message]
-            time {[float]} -- [Time when the message was sent]
-        
-        Keyword Arguments:
-            value {[any]} -- [Value to be carried with the message] (default: {None})
-        """
-        self.msgType = msgType
-        self.srcPort = srcPort
-        self.dstPort = dstPort
-        self.time = time
+class Content:
+    def __init__(self, port, value):
+        self.port = port
         self.value = value
     
     @property
-    def msgType(self):
-        return self.msgType
-
-    @msgType.setter
-    def msgType(self, value):
-        assert value in MsgType
-        self.msgType = value
-
-
-    @property
-    def srcPort(self):
-        return self.srcPort
-
-    @srcPort.setter
-    def srcPort(self, instance):
-        assert isinstance(instance, Port)
-        self.srcPort = instance
+    def port(self):
+        return self.port
     
-    @property
-    def dstPort(self):
-        return self.dstPort
-
-    @dstPort.setter
-    def dstPort(self, instance):
+    @port.setter
+    def port(self, instance):
         assert isinstance(instance, Port)
-        self.dstPort = instance
+        self.port = port
+
+class Message:
+    
+
+    class X(Message):
+        def __init__(self, source, time, content=None):
+            super().__init__(source, time, content)
+    class Y(Message):
+        def __init__(self, source, time, content=None):
+            super().__init__(source, time, content)
+    class Done(Message):
+        def __init__(self, source, time, content=None):
+            super().__init__(source, time, content)
+    class Star(Message):
+        def __init__(self, source, time, content=None):
+            super().__init__(source, time, content)
+    
+    def __init__(self, source, time, content=None):
+        """[__init__]
+        Arguments:
+            source {[Processor]} -- [Source processor of the message]
+            time {[float]} -- [Time when the message was sent]
+        
+        Keyword Arguments:
+            content {Content} -- [Value to be carried with the message] (default: {None})
+        """
+        self.source = source
+        self.time = time
+        self.content = content
+
+    @property
+    def source(self):
+        return self.source
+
+    @source.setter
+    def source(self, instance):
+        assert issubclass(instance, Processor)
+        self.source = instance
 
     @property
     def time(self):
@@ -56,3 +62,13 @@ class Message:
     def time(self, value):
         assert type(value) is float
         self.time = value
+    
+    @property
+    def content(self):
+        return self.content
+    
+    @content.setter
+    def content(self, instance):
+        assert isinstance(instance, Content) or instance is None
+        self.content = instance
+
