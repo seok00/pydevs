@@ -1,49 +1,38 @@
 from Port import Port
 from Model import Model
 from Processor import Processor
-
-class Content:
-    def __init__(self, port, value):
-        self.port = port
-        self.value = value
-    
-    @property
-    def port(self):
-        return self.port
-    
-    @port.setter
-    def port(self, instance):
-        assert isinstance(instance, Port)
-        self.port = port
+   
 
 class Message:
     
 
     class X(Message):
-        def __init__(self, source, time, content=None):
-            super().__init__(source, time, content)
+        def __init__(self, source, time, port=None, value=None):
+            super().__init__(source, time, port, value)
     class Y(Message):
-        def __init__(self, source, time, content=None):
-            super().__init__(source, time, content)
+        def __init__(self, source, time, port=None, value=None):
+            super().__init__(source, time, port, value)
     class Done(Message):
-        def __init__(self, source, time, content=None):
-            super().__init__(source, time, content)
+        def __init__(self, source, time, port=None, value=None):
+            super().__init__(source, time, port, value)
     class Star(Message):
-        def __init__(self, source, time, content=None):
-            super().__init__(source, time, content)
+        def __init__(self, source, time, port=None, value=None):
+            super().__init__(source, time, port, value)
     
-    def __init__(self, source, time, content=None):
+    def __init__(self, source, time, port, value):
         """[__init__]
         Arguments:
             source {[Processor]} -- [Source processor of the message]
             time {[float]} -- [Time when the message was sent]
         
         Keyword Arguments:
-            content {Content} -- [Value to be carried with the message] (default: {None})
+            port {[Port]} -- [Source port of the message](default: {None})
+            value {any} -- [Value to be carried with the message] (default: {None})
         """
         self.source = source
         self.time = time
-        self.content = content
+        self.port = port
+        self.value = value
 
     @property
     def source(self):
@@ -62,13 +51,13 @@ class Message:
     def time(self, value):
         assert type(value) is float
         self.time = value
-    
+
     @property
-    def content(self):
-        return self.content
+    def port(self):
+        return self.port
     
-    @content.setter
-    def content(self, instance):
-        assert isinstance(instance, Content) or instance is None
-        self.content = instance
+    @port.setter
+    def port(self, instance):
+        assert isinstance(instance, Port) or instance is None
+        self.port = port
 
