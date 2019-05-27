@@ -4,3 +4,5 @@ need to straight out when to check type
 the couplings variable acts like a dictionary, might change to a dictionary later
 add model argument for simulator and coordinator
 no children in 
+
+1. change _Message.py to Message.py after completion. # Done
