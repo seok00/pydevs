@@ -4,10 +4,10 @@ from enum import Enum
 
 class Message:
     class MsgType(Enum):
-        Done = "done"
-        Star = "star"
-        X = "x"
-        Y = "y"
+        Done = 1
+        Star = 2
+        X = 3
+        Y = 4
 
     def __init__(self, msgType, srcPort, dstPort, time, value=None):
         """[__init__]
@@ -26,6 +26,16 @@ class Message:
         self.time = time
         self.value = value
     
+    @property
+    def msgType(self):
+        return self.msgType
+
+    @msgType.setter
+    def msgType(self, value):
+        assert value in MsgType
+        self.msgType = value
+
+
     @property
     def srcPort(self):
         return self.srcPort

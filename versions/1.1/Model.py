@@ -2,25 +2,21 @@ from Entity import Entity
 from Processor import Processor
 
 class Model(Entity):
-    def __init__(self, name, processor, parent=None):
-        assert issubclass(processor, Processor)
+    def __init__(self, name, parent=None):
+        """[summary]
+        
+        Arguments:
+            name {[str]} -- [name of the entity]
+        
+        Keyword Arguments:
+            parent {[Model]} -- [parent of the model] (default: {None})
+        """
         assert parent is None or issubclass(parent, Model)
         super().__init__(name)
-
-        self.processor = processor
         self.inports = []
         self.outports = []
         self.parent = parent
         self.pos = None
-
-    @property
-    def processor(self):
-        return self.processor
-
-    @processor.setter
-    def processor(self, processor):
-        assert issubclass(processor, Processor)
-        self.processor = processor
 
     @property
     def parent(self):
