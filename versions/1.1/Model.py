@@ -1,5 +1,4 @@
 from Entity import Entity
-from Processor import Processor
 
 class Model(Entity):
     def __init__(self, name, parent=None):

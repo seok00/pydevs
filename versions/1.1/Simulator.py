@@ -3,17 +3,34 @@ from Message import Message
 from Atomic import Atomic
 from Port import Port
 from Processor import Processor
+from constants import MsgType
 
 class Simulator(Processor):
-    def __init__(self, name, parent=None):
-        super().__init__(name, parent)
-        self.model = model
 
+
+    def __init__(self, name, model, parent=None):
+        """[init]
+        
+        Arguments:
+            name {[str]} -- [Name of the entity]
+            model {[Model]} -- [Model which this processor will be attached to]
+        
+        Keyword Arguments:
+            parent {[Processor]} -- [Parent processor] (default: {None})
+        """
+        super().__init__(name, model, parent)
 
     def process(self, message):
+        """[processes message]
+        
+        Arguments:
+            message {[Message]} -- [The message of ]
+        
+        Returns:
+            [type] -- [description]
+        """
         assert issubclass(message, Message)
-        result = None
-        if type(message) is Message.X:
+        if type(message) is MsgType.X:
             # arrival of external event, global time
             # 1. Update time variables
             # 2. execute external transition function
@@ -22,7 +39,7 @@ class Simulator(Processor):
             self.nextEventTime = self.model.timeAdvance()
             self.model.externalTransition(message)
             return Message.Done(self.model, self.nextEventTime)
-        elif type(message) is Message.Star:
+        elif type(message) is MsgType.Star:
             # Time to execute internal transition
             # 1. Get output of current phase's internal transition
             # 2. Comput internal transition function

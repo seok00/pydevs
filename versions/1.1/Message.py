@@ -1,13 +1,7 @@
 from Port import Port
 from Model import Model
-from enum import Enum
 
 class Message:
-    class MsgType(Enum):
-        Done = 1
-        Star = 2
-        X = 3
-        Y = 4
 
     def __init__(self, msgType, srcPort, dstPort, time, value=None):
         """[__init__]

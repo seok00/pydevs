@@ -2,14 +2,22 @@ from Entity import Entity
 from Model import Model
 
 class Processor(Entity):
-    def __init__(self, name, model,parent=None):
+    def __init__(self, name, model, parent=None):
+        """[summary]
+        
+        Arguments:
+            name {[str]} -- [Name of the entity]
+            model {[Model]} -- [Model which this processor will be processing]
+        
+        Keyword Arguments:
+            parent {[Model]} -- [description] (default: {None})
+        """
         assert issubclass(parent, Processor) or parent is None
         assert issubclass(model, Model)
         super().__init__(name)
         
         self.lastEventTime = 0.0
         self.nextEventTime = 0.0
-        # model which the Processor is processing
         self.model = model
         self.parent = parent
     @property
